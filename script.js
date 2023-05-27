@@ -5,31 +5,39 @@ let todosIndex = 0;
 
 let todos = [];
 
-let createTodo = () => {
+function deleteTodo(i) {
+   todosWrapper.removeChild(todos[i - 1])
+   delete todos[i - 1]
+   console.log(todos)
+}
+
+function editTodo(i) {
+   console.log(todos[i-1])
+}
+
+
+function createTodo() {
    let input = document.querySelector('.form-control')
-   if (!input.value) {
-      return alert('You did not type a todo')
-   } else {
-      todosIndex++
-      let todoCode =
-         `<div class="todo" style="display:flex; width:100%">
+   todosIndex++
+   let todoCode =
+      `<div class="todo" style="display:flex; width:100%">
+      <div class="todo__column" style="width:33.333%">
+            <p class="todo__index">${todosIndex}</p>
+         </div>
          <div class="todo__column" style="width:33.333%">
-               <p class="todo__index">${todosIndex}</p>
+            <p class="todo__name">${input.value}</p>
+         </div>
+         <div class="todo__column" style="width:33.333%">
+            <div class="todo__actions">
+               <button onclick="editTodo(${todosIndex})" class="todo__btn editButton">Edit</button>
+               <button onclick="deleteTodo(${todosIndex})" class="todo__btn deleteButton">Delete</button>
             </div>
-            <div class="todo__column" style="width:33.333%">
-               <p class="todo__name">2</p>
-            </div>
-            <div class="todo__column" style="width:33.333%">
-               <p class="todo__actions">3</p>
-            </div>
-         </div>`
-      let todo = document.createElement('div')
-      todo.innerHTML = todoCode
-      todosWrapper.append(todo)
-      todos.push(todo)
-      console.log(todos)
-   }
+         </div>
+      </div>`
+   let todo = document.createElement('div')
+   todo.innerHTML = todoCode
+   todosWrapper.append(todo)
+   todos.push(todo)
 }
 
 addButton.addEventListener('click', createTodo)
-
