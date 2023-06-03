@@ -7,7 +7,6 @@ let todos = [];
 
 function createTodo() {
    let input = document.querySelector('.form-control')
-
    todos.push(input.value)
    input.value = ''
    renderTodos()
@@ -20,7 +19,7 @@ function renderTodos() {
       `<td class="todo__column" style="width:33.333%">
             <p class="todo__index">${index + 1}</p>
          </td>
-         <td class="todo__column" style="width:33.333%">
+         <td class="todo__column todo-column-text" style="width:33.333%">
             <p class="todo__name">${todo}</p>
          </td>
          <td class="todo__column" style="width:33.333%">
@@ -35,13 +34,26 @@ function renderTodos() {
    })
 }
 
-function deleteTodo(i) {
-   todos.splice(i, 1)
+function editTodo(index) {
+   let todoInputCode = `<input type="text" class="todo__form" placeholder="Type new text for todo" />
+   <button onclick="saveNewTodoText(${index})" class="todo__btn editSaveButton">Save</button>`
+   let todoText = document.querySelector('.todo__column.todo-column-text')
+   let todoName = document.querySelector('.todo__name')
+   let todoInput = document.createElement('div')
+   todoName.style.display = 'none'
+   todoInput.innerHTML = todoInputCode
+   todoText.append(todoInput)
+}
+
+function saveNewTodoText(index) {
+   let input = document.querySelector('.todo__form')
+   todos[index] = input.value
    renderTodos()
 }
 
-function editTodo(i) {
-   console.log(todos[i-1])
+function deleteTodo(i) {
+   todos.splice(i, 1)
+   renderTodos()
 }
 
 addButton.addEventListener('click', createTodo)
